@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 9, 2015, 2:11:24 PM
+    Author     : bloodspell
+*/
+
+/* -------------------------------------------------------------------------- */
+/* About component */
+
+ng-view .aboutComponent {
+    line-height: 1.6em;
+    padding: 10px 20px 20px 20px;
+    margin: auto;
+    max-width: 768px;
+    text-align: justify;
+}
+ng-view .aboutComponent blockquote {
+    border-left: 10px solid #E5E5E5;
+    color: #999;
+    font-size: .8em;
+    margin: 0;
+    padding: 0 0 0 10px;
+}
+ng-view .aboutComponent blockquote span { color: #444; }
+ng-view .aboutComponent div { text-align: center; }
+ng-view .aboutComponent div a { color: #555; }
+ng-view .aboutComponent div a:hover { text-decoration: none; }
+ng-view .aboutComponent div img { display: block; margin: auto; max-width: 100%; }

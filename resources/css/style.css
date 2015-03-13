@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 8, 2015, 1:13:28 PM
+    Author     : bloodspell
+*/
+
+/* -------------------------------------------------------------------------- */
+/* Wrapper */
+core-header-panel { background: white; font-family: 'RobotoDraft', sans-serif; }
+
+/* -------------------------------------------------------------------------- */
+/* Toolbar */
+core-header-panel core-toolbar { background: #1E86BD; color: white; }
+
+/* Paper menu */
+core-header-panel core-toolbar paper-menu-button {}
+core-header-panel core-toolbar paper-menu-button paper-icon-button {}
+core-header-panel core-toolbar paper-menu-button paper-dropdown {}
+core-header-panel core-toolbar paper-menu-button paper-dropdown core-menu {}
+core-header-panel core-toolbar paper-menu-button paper-dropdown core-menu paper-item { color: #444; }
+core-header-panel core-toolbar paper-menu-button paper-dropdown core-menu paper-item a { color: #444; text-decoration: none; }
+
+/* -------------------------------------------------------------------------- */
+/* Content */
+core-header-panel ng-view { background: white; color: #444; }
+
+/* -------------------------------------------------------------------------- */
+/* Footer */
+core-header-panel footer {
+    border-top: 1px solid #CCC;
+    color: #999;
+    font-size: .8em;
+    margin: 10px auto auto auto;
+    max-width: 768px;
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+}
+core-header-panel footer a { color: #999; }
+core-header-panel footer a:hover { text-decoration: none; }

@@ -1,0 +1,27 @@
+<!--
+    Generator component
+-->
+<div ng-init="init();" class="generatorComponent">
+
+    <div id="inputs" vertical center layout>
+        <paper-input ng-model="alias" label="Alias"></paper-input>
+        <paper-input ng-model="secret" ng-show="visibleSecret" label="Secret"></paper-input>
+        <paper-input-decorator ng-show="!visibleSecret" label="Secret">
+            <input type="password" ng-model="secret">
+        </paper-input-decorator>
+        <paper-checkbox ng-click="toggleSecret()" label="Show secret"></paper-checkbox>
+    </div>
+    <div id="buttons" horizontal around-justified layout>
+        <paper-button ng-click="clear()" raised flex>Clear</paper-button>
+        <paper-button ng-click="generate()" id="generate" raised flex>Generate</paper-button>
+    </div>
+    
+    <paper-toast></paper-toast>
+    <paper-action-dialog heading="Your password:" layered="false" backdrop>
+        <p id="password"><span>{{password}}</span></p>
+        <p>You can now select your password and copy it to clipboard. Don't forget to clear the generator form before you leave the page!</p>
+        <paper-button dismissive>Close</paper-button>
+        <paper-button ng-click="clear()" affirmative>Close & Clear</paper-button>
+    </paper-action-dialog>
+    
+</div>

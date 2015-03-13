@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html ng-app="wds-password-generator">
+    <head>
+        
+        <!-- --------------------------------------------------------------- -->
+        <!-- Meta tags -->
+	<meta charset="utf-8">
+	<meta name="description" content="WDS Password Generator">
+	<meta name="keywords" content="password, generator">
+	<meta name="author" content="Michal Sukupčák, sukupcak@webdesign-studio.sk, michal.sukupcak@gmail.com">
+	<meta name="language" value="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="theme-color" content="#1E86BD">
+        <title>WDS Password Generator</title>
+        
+        <!-- --------------------------------------------------------------- -->
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <!-- --------------------------------------------------------------- -->
+        <!-- Polymer imports -->
+        <link rel="import" href="./resources/plugins/font-roboto/roboto.html">
+        <link rel="import" href="./resources/plugins/core-header-panel/core-header-panel.html">
+        <link rel="import" href="./resources/plugins/core-icon/core-icon.html">
+        <link rel="import" href="./resources/plugins/core-menu/core-menu.html">
+        <link rel="import" href="./resources/plugins/core-toolbar/core-toolbar.html">
+        
+        <!-- Paper imports -->
+        <link rel="import" href="./resources/plugins/paper-dialog/paper-action-dialog.html">
+        <link rel="import" href="./resources/plugins/paper-button/paper-button.html">
+        <link rel="import" href="./resources/plugins/paper-checkbox/paper-checkbox.html">
+        <link rel="import" href="./resources/plugins/paper-dropdown/paper-dropdown.html">
+        <link rel="import" href="./resources/plugins/paper-icon-button/paper-icon-button.html">
+        <link rel="import" href="./resources/plugins/paper-input/paper-input.html">
+        <link rel="import" href="./resources/plugins/paper-input/paper-input-decorator.html">
+        <link rel="import" href="./resources/plugins/paper-item/paper-item.html">
+        <link rel="import" href="./resources/plugins/paper-menu-button/paper-menu-button.html">
+        <link rel="import" href="./resources/plugins/paper-toast/paper-toast.html">
+        
+        <!-- --------------------------------------------------------------- -->
+        <!-- Style -->
+        <link rel="stylesheet" type="text/css" href="./resources/css/style.css">
+                
+        <!-- Add -->
+        <link rel="stylesheet" type="text/css" href="./app/components/about/About.css">
+        
+        <!-- Generator -->
+        <link rel="stylesheet" type="text/css" href="./app/components/generator/Generator.css">
+                
+    </head>
+    <body ng-controller="UiController" ng-init="init()" undersolved fullbleed vertical layout>
+                
+        <!-- --------------------------------------------------------------- -->
+        <!-- App scaffold -->
+        <core-header-panel mode="standard" flex>
+            
+            <!-- Toolbar -->
+            <core-toolbar>
+                <paper-icon-button ng-click="back()" ng-show="!showGeneratorUi" icon="arrow-back"></paper-icon-button>
+                <div>{{appTitle}}</div>
+                <div flex></div>
+                <paper-menu-button ng-show="showGeneratorUi">
+                     <paper-icon-button icon="more-vert"></paper-icon-button>
+                     <paper-dropdown class="dropdown" halign="right" valign="top">
+                         <core-menu class="menu">
+                             <paper-item><a href="#/about">About</a></paper-item>
+                         </core-menu>
+                     </paper-dropdown>
+                 </paper-menu-button>
+            </core-toolbar>
+            
+            <!-- Content -->
+            <ng-view></ng-view>
+            
+            <!-- Footer -->
+            <footer>Made by <a href="https://webdesign-studio.sk" target="_blank">Webdesign Studio s.r.o.</a> | <a href="http://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">(CC)</a> 2015</footer>
+            
+        </core-header-panel>
+        <!-- --------------------------------------------------------------- -->
+            
+        <!-- --------------------------------------------------------------- -->
+        <!-- Polyfills -->
+        <script type="text/javascript" src="./resources/plugins/webcomponentsjs/webcomponents.min.js"></script>
+        
+        <!-- --------------------------------------------------------------- -->
+        <!-- Angular JS Libraries -->
+        <script type="text/javascript" src="./resources/plugins/angular/angular.min.js"></script>
+        <script type="text/javascript" src="./resources/plugins/angular-route/angular-route.min.js"></script>
+        <script type="text/javascript" src="./resources/plugins/ng-polymer-elements/ng-polymer-elements.min.js"></script>
+        
+        <!-- --------------------------------------------------------------- -->
+        <!-- App Config -->
+        <script type="text/javascript" src="./app/App.js"></script>
+        <script type="text/javascript" src="./app/App.Config.js"></script>
+        
+        <!-- --------------------------------------------------------------- -->
+        <!-- Shared -->
+        <script type="text/javascript" src="./app/shared/base64.js"></script>
+        <script type="text/javascript" src="./app/shared/sha256.js"></script>
+        
+        <!-- --------------------------------------------------------------- -->
+        <!-- Components: JS -->
+        
+        <!-- About -->
+        <script type="text/javascript" src="./app/components/about/AboutController.js"></script>
+        
+        <!-- Generator -->
+        <script type="text/javascript" src="./app/components/generator/GeneratorController.js"></script>
+                
+        <!-- UI -->
+        <script type="text/javascript" src="./app/core/ui/UiController.js"></script>
+        
+    </body>
+</html>
