@@ -4,15 +4,24 @@
  * and open the template in the editor.
  */
 
-app.controller('GeneratorController', ['$scope', function ($scope) {
+app.controller('GeneratorController', ['$scope','$localStorage', function ($scope,$localStorage) {
         
     /**
      * Initializes controller instance - set default variables.
      * 
      */
-    $scope.init = function () {
+    $scope.init = function (allowSave) {
         $scope.alias = '';
-        $scope.secret = '';
+        if ($localStorage.secret && allowSave === true) {
+            $scope.secret = $localStorage.secret;
+            $scope.saveSecret = true;
+            //document.querySelector('paper-checkbox[ng-model]').setAttribute('checked',true);
+        } else {
+            delete $localStorage.secret;
+            $scope.secret = '';
+            $scope.saveSecret = false;
+        }
+        console.log($scope.saveSecret);
         $scope.password = '';
         $scope.visibleSecret = false;
     };
@@ -26,26 +35,34 @@ app.controller('GeneratorController', ['$scope', function ($scope) {
     };
     
     /**
+     * Show warning dialog.
+     */
+    $scope.showWarning = function () {
+        if ($scope.saveSecret === true) {
+            document.querySelector('paper-action-dialog#warning').toggle();
+        }
+    };
+    
+    /**
      * Reset generator form - set default values to variables and show toast
      * message.
-     * 
-     * @returns {undefined}
      */
     $scope.clear = function () {
-        $scope.init();
+        $scope.init(false);
         $scope.toast('All data have been cleared.');
     };
     
     /**
      * Check if both alias and secret have been filled in. If yes, run
      * generator, otherwise show toast message.
-     * 
-     * @returns {undefined}
      */
     $scope.generate = function () {
         if ($scope.alias.length > 0 && $scope.secret.length > 0) {
             $scope.password = Base64.encode(Sha256.hash($scope.alias+$scope.secret)).substring(17,49);
-            document.querySelector('paper-action-dialog').open();
+            document.querySelector('paper-action-dialog#password').open();
+            if ($scope.saveSecret === true) {
+                $localStorage.secret = $scope.secret;
+            }
         } else {
             $scope.toast('Please fill in both Alias and Secret!');
         }
@@ -53,8 +70,6 @@ app.controller('GeneratorController', ['$scope', function ($scope) {
         
     /**
      * Show toast message.
-     * 
-     * @param {string} string
      */
     $scope.toast = function (string) {
         var notification = document.querySelector('paper-toast');
@@ -62,5 +77,5 @@ app.controller('GeneratorController', ['$scope', function ($scope) {
         notification.setAttribute('text',string);
         notification.show();
     };
-        
+            
 }]);

@@ -1,32 +1,29 @@
 /*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Mar 9, 2015, 2:11:24 PM
-    Author     : bloodspell
+    Author: Michal Sukupčák <sukupcak@webdesign-studio.sk>
 */
 
 /* -------------------------------------------------------------------------- */
 /* Generator component */
+ng-view .generatorComponent { margin: 20px auto; max-width: 320px; padding: 0 20px; }
 
-ng-view .generatorComponent {}
-ng-view .generatorComponent { background: white; color: #444; padding: 20px; }
-ng-view .generatorComponent #inputs {}
-ng-view .generatorComponent #inputs paper-input { max-width: 320px; width: 100%; }
-ng-view .generatorComponent #inputs paper-input-decorator { max-width: 320px; width: 100%; }
-ng-view .generatorComponent #inputs paper-checkbox { margin: 20px 0 10px 0; }
-ng-view .generatorComponent #inputs paper-checkbox::shadow #ink[checked] { color: #1E86BD; }
-ng-view .generatorComponent #inputs paper-checkbox::shadow #checkbox.checked { background: #1E86BD; color: #1E86BD; }
-ng-view .generatorComponent #buttons { margin: 20px auto auto auto; max-width: 320px; }
-ng-view .generatorComponent #buttons paper-button {}
-ng-view .generatorComponent #buttons paper-button#generate { background: #1E86BD; color: white; }
+/* Inputs */
+ng-view .generatorComponent div.inputs {}
+ng-view .generatorComponent div.inputs paper-input {}
+ng-view .generatorComponent div.inputs paper-input-decorator {}
+
+/* Checkboxes */
+ng-view .generatorComponent div.inputs core-label paper-checkbox::shadow #ink[checked] { color: #1E86BD; }
+ng-view .generatorComponent div.inputs core-label paper-checkbox::shadow #checkbox.checked { background: #1E86BD; border-color: #1E86BD; color: #1E86BD; }
+
+/* Buttons */
+ng-view .generatorComponent div.buttons { margin: 20px auto auto auto; max-width: 320px; }
+ng-view .generatorComponent div.buttons paper-button {}
+ng-view .generatorComponent div.buttons paper-button { background: white; }
+ng-view .generatorComponent div.buttons paper-button#generate { background: #1E86BD; color: white; }
 
 /* Paper dialog */
-paper-action-dialog {}
+paper-action-dialog { max-width: 768px; }
 paper-action-dialog p { text-align: justify; }
 paper-action-dialog p#password { background: #E5E5E5; border: 1px solid #CCC; padding: 10px; text-align: center; overflow: auto; }
-paper-action-dialog paper-button {}
-paper-action-dialog paper-button[affirmative] { color: #1E86BD; }
-paper-action-dialog paper-button[dismissive] {}
+paper-action-dialog#warning paper-button[affirmative] { color: red; }
+paper-action-dialog#password paper-button[affirmative] { color: #1E86BD; }

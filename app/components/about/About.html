@@ -1,64 +1,92 @@
 <!--
     About component
+
+    Author: Michal Sukupčák <sukupcak@webdesign-studio.sk>
 -->
 <div ng-init="init()" class="aboutComponent">
 
-    <h2>Features:</h2>
-
-    <strong>Secure</strong> - Everything is done inside your browser, no data leave your device, either to our servers, or anywhere else<br>
-    <strong>Easy to use</strong> - Well designed and polished UI for both computers and mobile devices<br>
-    <strong>Helpful</strong> - No need to remember complicated passwords<br>
-    <strong>Fast</strong> - Your password is generated instantly
-
-    <br>
-    <br>
+    <div class="block">
+        <h2>Features:</h2>
+        <ul>
+            <li>
+                <strong>Secure</strong> - Everything is done inside your 
+                browser, no data leave your device, either to our servers, 
+                or anywhere else.
+            </li>
+            <li>
+                <strong>Easy to use</strong> - Well designed and polished UI 
+                for both computers and mobile devices.
+            </li>
+            <li>
+                <strong>Helpful</strong> - No need to remember complicated 
+                passwords.
+            </li>
+            <li>
+                <strong>Fast</strong> - Your password is generated instantly.
+            </li>
+        </ul>
+    </div>
     
-    <h2>What does it do?</h2>
-
-    Generator helps you with the problem of creating and remembering unique passwords for all the social networks, online services and websites you need passwords for. With just the help of an easy to remember alias and one passphrase, generator creates unique strong passwords for your services.
+    <hr>
     
-    <br>
-    <br>
+    <div class="block justify">
+        <h2>What does it do?</h2>
+        Generator helps you with the problem of creating and remembering unique 
+        passwords for all the social networks, online services and websites you 
+        need passwords for. With just the help of an easy to remember alias and 
+        one passphrase, generator creates unique strong passwords for your 
+        services.
+        <br>
+        <br>
+        <strong>And what if you forget the generated password?</strong> That's 
+        the best part: <u>You don't even have to remember it!</u> Just come back 
+        to the generator and type in your alias and secret, and generator's 
+        algorithm generates the same password for you once again.
+    </div>
     
-    <strong>And what if you forget the generated password?</strong> That's the best part: <u>You don't even have to remember it!</u> Just come back to the generator and type in your alias and secret, and generator's algorithm generates the same password for you once again.
-
-    <br>
-    <br>
+    <hr>
     
-    <h2>How it works?</h2>
-
-    All you need to remember for a website is its <u>alias</u>, for example its domain or service name (facebook for https://facebook.com, onedrive for Microsoft's One Drive, etc..) and <strong>one</strong> strong secret passphrase. Generator then combines your alias and secret to together and generates a unique strong password for you. For the more tech-savvy of you, this is the meta algorithm. You can even create your own version of generator based on this algorithm:
-
-    <br>
-    <br>
+    <div class="block justify">
+        <h2>How it works?</h2>
+        All you need to remember for a website is its <u>alias</u>, for example 
+        its domain or service name (facebook for https://facebook.com, onedrive 
+        for Microsoft's One Drive, etc..) and <strong>one</strong> strong secret 
+        passphrase. Generator then combines your alias and secret to together 
+        and generates a unique strong password for you. For the more tech-savvy 
+        of you, this is the meta algorithm. You can even create your own version 
+        of generator based on this algorithm:
+        <br>
+        <br>
+        <blockquote>
+        <span>String alias = ...;</span> // Acquire alias<br>
+        <span>String secret = ...;</span> // Acquire secret<br>
+        <span>String s = alias + secret;</span> // Simply join alias and secret into one string<br>
+        <span>String hash = hash('sha256',s);</span> // Generate hash of string s using SHA256 algorithm<br>
+        <span>String base = base64Encode(hash);</span> // Encode hash from previous step into base64 encoding<br>
+        <span>String password = base.substring(17,49);</span> // Take 32 characters from generated base64, starting with 16th character, all the way up to 48th
+        </blockquote>
+    </div>
     
-    <blockquote>
-    <span>String alias = ...;</span> // Acquire alias<br>
-    <span>String secret = ...;</span> // Acquire secret<br>
-    <span>String s = alias + secret;</span> // Simply join alias and secret into one string<br>
-    <span>String hash = hash('sha256',s);</span> // Generate hash of string s using SHA256 algorithm<br>
-    <span>String base = base64Encode(hash);</span> // Encode hash from previous step into base64 encoding<br>
-    <span>String password = base.substring(17,49);</span> // Take 32 characters from generated base64, starting with 16th character, all the way up to 48th
-    </blockquote>
+    <hr>
     
-    <br>
-    <br>
-    
-    <div>
+    <div class="block">
         <h2>Author & licenses:</h2>
-        <p>
-            Author: <a href="https://plus.google.com/+MichalSukup%C4%8D%C3%A1k">Michal Sukupčák</a>
-            <br>
-            Made by: <a href="http://webdesign-studio.sk">Webdesign Studio s.r.o.</a>
-            <br>
-            Source download: <a href="https://github.com/Bloodspell/Password-Generator">Github repository</a>
-            <br>
-            License: <a href="http://creativecommons.org/licenses/by/4.0/legalcode">CC Attribution 4.0 International</a>
-            <br>
-            <br>
-            Feel free to use, download, explore, modify or share any and all parts of the source code.
-        </p>
-        <img src="./resources/images/logo.png">
+        <ul>
+            <li>
+                Author: <a href="https://plus.google.com/+MichalSukup%C4%8D%C3%A1k">Michal Sukupčák</a>
+            </li>
+            <li>
+                Made by: <a href="http://webdesign-studio.sk">Webdesign Studio s.r.o.</a>
+            </li>
+            <li>
+                Source download: <a href="https://github.com/Bloodspell/Password-Generator">Github repository</a>
+            </li>
+            <li>
+                License: <a href="http://creativecommons.org/licenses/by/4.0/legalcode">CC Attribution 4.0 International</a>
+            </li>
+        </ul>
+        Feel free to use, download, explore, modify or share any and all parts 
+        of the source code.
     </div>
     
 </div>

@@ -1,0 +1,24 @@
+<!--
+    Toolbar
+
+    Author: Michal Sukupčák <sukupcak@webdesign-studio.sk>
+    Copyright: Webdesign Studio s.r.o. (c) 20125
+-->
+
+<!-- Toolbar -->
+<core-toolbar ng-init="init()">
+    <paper-icon-button ng-click="openGenerator()" ng-show="showBackArrow" icon="arrow-back"></paper-icon-button>
+    <div>{{appTitle}}</div>
+    <div flex></div>
+    <paper-menu-button ng-show="showEllipsis">
+        <paper-icon-button icon="more-vert"></paper-icon-button>
+        <paper-dropdown class="dropdown" halign="right" valign="top">
+            <core-menu class="menu">
+                <paper-item ng-click="openAbout()">About</paper-item>
+            </core-menu>
+        </paper-dropdown>
+    </paper-menu-button>
+</core-toolbar>
+
+<!-- Content -->
+<ng-view></ng-view>
