@@ -1,126 +1,103 @@
-<!--
-    Main app page
-
-    Author: Michal Sukupčák <sukupcak@webdesign-studio.sk>
--->
 <!DOCTYPE html>
 <html ng-app="wds-password-generator">
     <head>
-        
-        <!-- --------------------------------------------------------------- -->
+
         <!-- Meta tags -->
-	<meta charset="utf-8">
-	<meta name="description" content="WDS Password Generator">
-	<meta name="keywords" content="password, generator">
-	<meta name="author" content="Michal Sukupčák, sukupcak@webdesign-studio.sk, michal.sukupcak@gmail.com">
-	<meta name="language" value="en">
-	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta charset="utf-8">
+        <meta name="description" content="WDS Password Generator">
+        <meta name="keywords" content="password, generator">
+        <meta name="author" content="Michal Sukupčák, sukupcak@webdesign-studio.sk, michal.sukupcak@gmail.com">
+        <meta name="language" value="en">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta name="theme-color" content="#1E86BD">
+        <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="mobile-web-app-capable" content="yes">
-        <title>WDS Password Generator</title>
-        
-        <!-- --------------------------------------------------------------- -->
+        <title>Password Generator 2.0</title>
+
         <!-- Favicon -->
-        <link rel="shortcut icon" href="favicon.png">
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- Polymer imports -->
-        <link rel="import" href="./resources/plugins/font-roboto/roboto.html">
-        <link rel="import" href="./resources/plugins/core-header-panel/core-header-panel.html">
-        <link rel="import" href="./resources/plugins/core-icon/core-icon.html">
-        <link rel="import" href="./resources/plugins/core-menu/core-menu.html">
-        <link rel="import" href="./resources/plugins/core-toolbar/core-toolbar.html">
-        
-        <!-- Paper imports -->
-        <link rel="import" href="./resources/plugins/paper-dialog/paper-action-dialog.html">
-        <link rel="import" href="./resources/plugins/paper-button/paper-button.html">
-        <link rel="import" href="./resources/plugins/paper-checkbox/paper-checkbox.html">
-        <link rel="import" href="./resources/plugins/paper-dialog/paper-dialog.html">
-        <link rel="import" href="./resources/plugins/paper-dropdown/paper-dropdown.html">
-        <link rel="import" href="./resources/plugins/paper-icon-button/paper-icon-button.html">
-        <link rel="import" href="./resources/plugins/paper-input/paper-input.html">
-        <link rel="import" href="./resources/plugins/paper-input/paper-input-decorator.html">
-        <link rel="import" href="./resources/plugins/paper-item/paper-item.html">
-        <link rel="import" href="./resources/plugins/paper-menu-button/paper-menu-button.html">
-        <link rel="import" href="./resources/plugins/paper-toast/paper-toast.html">
-                
-        <!-- --------------------------------------------------------------- -->
-        <!-- CSS Resources -->
-        <link rel="stylesheet" type="text/css" href="./resources/css/app.css">
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- Directives -->
-        <link rel="stylesheet" type="text/css" href="./app/shared/directives/checkbox/Checkbox.css">
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- Core: CSS -->
-                
-        <!-- Toolbar -->
-        <link rel="stylesheet" type="text/css" href="./app/core/toolbar/Toolbar.css">
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- Components: CSS -->
-                
-        <!-- Add -->
-        <link rel="stylesheet" type="text/css" href="./app/components/about/About.css">
-        
-        <!-- Generator -->
-        <link rel="stylesheet" type="text/css" href="./app/components/generator/Generator.css">
-                
-    </head>
-    <body ng-controller="UiController" ng-init="init()" undersolved fullbleed vertical layout>
-                
-        <!-- --------------------------------------------------------------- -->
-        <!-- App scaffold -->
-        <core-header-panel ng-x-toolbar mode="waterfall" flex></core-header-panel>
-        <!-- --------------------------------------------------------------- -->
-            
-        <!-- --------------------------------------------------------------- -->
-        <!-- JS Resources -->
-        <script type="text/javascript" src="./resources/plugins/base64/base64.js"></script>
-        <script type="text/javascript" src="./resources/plugins/sha256/sha256.js"></script>
-        
-        <!-- --------------------------------------------------------------- -->
+        <link rel="shortcut icon" href="./resources/images/favicon.png">
+
+        <!-- CSS styles -->
+        <link rel="stylesheet" href="./resources/style/design.css">
+
         <!-- Polyfills -->
-        <script type="text/javascript" src="./resources/plugins/webcomponentsjs/webcomponents.min.js"></script>
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- Angular JS Libraries -->
-        <script type="text/javascript" src="./resources/plugins/angular/angular.min.js"></script>
-        <script type="text/javascript" src="./resources/plugins/angular-route/angular-route.min.js"></script>
-        <script type="text/javascript" src="./resources/plugins/ng-polymer-elements/ng-polymer-elements.min.js"></script>
-        <script type="text/javascript" src="./resources/plugins/ngstorage/ngStorage.min.js"></script>
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- App Init -->
-        <script type="text/javascript" src="./app/App.js"></script>
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- Directives -->
-        <script type="text/javascript" src="./app/shared/directives/checkbox/CheckboxDirective.js"></script>
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- Core: JS -->
+        <script type="text/javascript" src="./vendor/webcomponentsjs/webcomponents.min.js"></script>
 
-        <!-- Toolbar -->
-        <script type="text/javascript" src="./app/core/toolbar/ToolbarController.js"></script>
-        <script type="text/javascript" src="./app/core/toolbar/ToolbarDirective.js"></script>
+        <!-- Polymer -->
+        <link rel="import" href="./vendor/polymer/polymer.html">
 
-        <!-- UI -->
-        <script type="text/javascript" src="./app/core/ui/UiController.js"></script>
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- Components: JS -->
-        
-        <!-- About -->
-        <script type="text/javascript" src="./app/components/about/AboutController.js"></script>
-        
-        <!-- Generator -->
-        <script type="text/javascript" src="./app/components/generator/GeneratorController.js"></script>
-        
-        <!-- --------------------------------------------------------------- -->
-        <!-- App Config -->
-        <script type="text/javascript" src="./app/App.Config.js"></script>
-        
+        <!-- Roboto font -->
+        <link rel="import" href="./vendor/font-roboto/roboto.html">
+
+        <!-- Core elements -->
+        <link rel="import" href="./vendor/core-a11y-keys/core-a11y-keys.html">
+        <link rel="import" href="./vendor/core-animated-pages/core-animated-pages.html">
+        <link rel="import" href="./vendor/core-header-panel/core-header-panel.html">
+        <link rel="import" href="./vendor/core-icon/core-icon.html">
+        <link rel="import" href="./vendor/core-icons/core-icons.html">
+        <link rel="import" href="./vendor/core-label/core-label.html">
+        <link rel="import" href="./vendor/core-localstorage/core-localstorage.html">
+        <link rel="import" href="./vendor/core-toolbar/core-toolbar.html">
+
+        <!-- Paper elements -->
+        <link rel="import" href="./vendor/paper-button/paper-button.html">
+        <link rel="import" href="./vendor/paper-checkbox/paper-checkbox.html">
+        <link rel="import" href="./vendor/paper-dialog/paper-action-dialog.html">
+        <link rel="import" href="./vendor/paper-input/paper-input.html">
+        <link rel="import" href="./vendor/paper-toast/paper-toast.html">
+
+        <!-- Router -->
+        <link rel="import" href="./vendor/app-router/app-router.html">
+
+    </head>
+    <body unresolved fullbleed vertical layout>
+
+        <!-- Wrapper -->
+        <core-header-panel flex>
+
+            <!-- App -->
+            <template is="auto-binding" id="app">
+
+                <!-- Toolbar -->
+                <core-toolbar>
+
+                    <!-- App title -->
+                    <div horizontal layout>
+                        <core-icon icon="arrow-back" class="backArrow" on-click="{{goToGenerator}}" hidden?="{{!showBackArrow}}"></core-icon>
+                        <div>{{appTitle}}</div>
+                    </div>
+
+                    <!-- Flex separator -->
+                    <div flex></div>
+
+                    <!-- Information icon -->
+                    <div>
+                        <core-icon icon="info" class="infoIcon" on-click="{{goToAbout}}" hidden?="{{!showInfoIcon}}"></core-icon>
+                    </div>
+
+                </core-toolbar>
+
+                <!-- Content -->
+                <div class="content">
+
+                    <!-- Router -->
+                    <app-router core-animated-pages transitions="cross-fade" on-state-change="{{appStateChange}}">
+                        <app-route path="/generator" import="./app/components/generator/Generator.html" element="generator-page"></app-route>
+                        <app-route path="/about" import="./app/components/about/About.html" element="about-page"></app-route>
+                        <app-route path="*" redirect="/generator"></app-route>
+                    </app-router>
+
+                </div>
+
+            </template>
+        </core-header-panel>
+
+        <!-- Application template -->
+        <script type="text/javascript" src="./app/app.js"></script>
+
+        <!-- Additional libraries -->
+        <script type="text/javascript" src="./resources/javascript/base64.js"></script>
+        <script type="text/javascript" src="./resources/javascript/sha256.js"></script>
+
     </body>
 </html>

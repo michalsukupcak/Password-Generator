@@ -1,0 +1,22 @@
+{
+  "name": "Polymer core-ajax demo",
+  "version": "1.0",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5",
+    "font-roboto": "Polymer/font-roboto",
+    "core-a11y-keys": "Polymer/core-a11y-keys",
+    "core-animated-pages": "Polymer/core-animated-pages",
+    "core-header-panel": "Polymer/core-header-panel",
+    "core-icon": "Polymer/core-icon",
+    "core-icons": "Polymer/core-icons",
+    "core-label": "Polymer/core-label",
+    "core-localstorage": "Polymer/core-localstorage",
+    "core-toolbar": "Polymer/core-toolbar",
+    "paper-button": "Polymer/paper-button",
+    "paper-checkbox": "Polymer/paper-checkbox",
+    "paper-dialog": "Polymer/paper-dialog",
+    "paper-input": "Polymer/paper-input",
+    "paper-toast": "Polymer/paper-toast",
+    "app-router": "app-router"
+  }
+}

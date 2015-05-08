@@ -1,68 +1,252 @@
-<!--
-    Generator component
+<polymer-element name="generator-page">
 
-    Author: Michal Sukupčák <sukupcak@webdesign-studio.sk>
--->
-<div ng-init="init(true)" class="generatorComponent">
+    <!-- Template -->
+    <template>
 
-    <!-- Input fields -->
-    <div class="inputs" vertical layout>
-        
-        <!-- Alias -->
-        <paper-input ng-model="alias" label="Alias"></paper-input>
-        
-        <!-- Secret - As text -->
-        <paper-input ng-model="secret" ng-show="visibleSecret" label="Secret"></paper-input>
-        
-        <!-- Secret - As password -->
-        <paper-input-decorator ng-show="!visibleSecret" label="Secret">
-            <input type="password" ng-model="secret">
-        </paper-input-decorator>
-        
-        <!-- Checkboxes -->
-        <ng-x-checkbox
-            ng-model="showSecret"
-            ng-click="toggleSecret()"
-            ng-x-title="Show secret"
-            ng-x-true="Secret is visible, click again to hide it."
-            ng-x-false="Secret is hidden, will become visible after clicking on the checkbox."
-        ></ng-x-checkbox>
-        <ng-x-checkbox
-            ng-model="saveSecret"
-            ng-click="showWarning()"
-            ng-x-title="Save secret"
-            ng-x-true="Secret will be save in browser's web storage."
-            ng-x-false="Secret will not be saved anywhere."
-        ></ng-x-checkbox>
-            
-        <!--
-        <paper-checkbox ng-click="toggleSecret()" label="Show secret"></paper-checkbox>
-        <paper-checkbox ng-model="save" ng-click="showWarning()" id="save" label="Save secret in browser local storage"></paper-checkbox>
-        -->
-        
-    </div>
-    
-    <!-- Buttons -->
-    <div class="buttons" horizontal around-justified layout>
-        <paper-button ng-click="clear()" raised flex>Clear data</paper-button>
-        <paper-button ng-click="generate()" id="generate" raised flex>Generate</paper-button>
-    </div>
-    
-    <!-- Toast notification -->
-    <paper-toast></paper-toast>
-    
-    <!-- Warning dialog -->
-    <paper-action-dialog id="warning" heading="WARNING" layered="false" backdrop>
-        <p>Storing your secret in local storage means your secret may become visible to anyone with physical access to your computer! Please make sure you only keep this setting checked on your personal and secure computer. Using the Clear data button will remove this setting and saved secret from local storage.</p>
-        <paper-button affirmative>I underestand the risks</paper-button>
-    </paper-action-dialog>
-    
-    <!-- Password dialog -->
-    <paper-action-dialog id="password" heading="Your password:" layered="false" backdrop>
-        <p id="password"><span>{{password}}</span></p>
-        <p>You can now select your password and copy it to your clipboard. Also, if you're on a publicly accessible computer, don't forget to clear the generator form before you leave the page!</p>
-        <paper-button dismissive>Close</paper-button>
-        <paper-button ng-click="clear()" affirmative>Close & Clear</paper-button>
-    </paper-action-dialog>
-    
-</div>
+        <!-- Design -->
+        <style>
+
+            /* Generator */
+            #generator {
+                margin: 20px auto auto auto;
+                max-width: 320px;
+            }
+
+            /* Checkbox wrapper */
+            #generator core-label {
+                margin: 10px 0 0 0;
+            }
+
+            /* Checkbox */
+            #generator core-label paper-checkbox {
+                cursor: pointer;
+                padding: 20px 20px 20px 0;
+            }
+            #generator core-label paper-checkbox::shadow #ink[checked] {
+                color: #1E86BD;
+            }
+            #generator core-label paper-checkbox::shadow #checkbox.checked {
+                background: #1E86BD;
+                border-color: #1E86BD;
+                color: #1E86BD;
+            }
+
+            /* Checkbox label */
+            #generator core-label div {
+                cursor: pointer;
+            }
+            #generator core-label div h4 {
+                margin: 20px 0 10px 0;
+            }
+
+            /* Buttons */
+            #generator .buttons {
+                margin: 40px 0 20px 0;
+            }
+            #generator .buttons paper-button {
+                background: white;
+            }
+            #generator .buttons paper-button.primary {
+                background: #1E86BD;
+                color: white;
+            }
+
+            /* Dialogs */
+            paper-action-dialog {
+                max-width: 480px;
+            }
+
+            /* Warning dialog button */
+            paper-action-dialog#saveSecretWarningDialog paper-button {
+                color: red;
+            }
+
+            /* Password dialog box */
+            paper-action-dialog#passwordDialog p.password {
+                background: #E5E5E5;
+                border: 1px solid #CCC;
+                padding: 10px;
+                text-align: center;
+                overflow: auto;
+            }
+            paper-action-dialog#passwordDialog paper-button.primary {
+                color: #1E86BD;
+            }
+
+        </style>
+
+        <!-- HTML -->
+        <div id="generator" cross-fade vertical layout>
+
+            <!-- Non-UI elements -->
+            <core-a11y-keys keys="enter" on-keys-pressed="{{generate}}"></core-a11y-keys>
+            <core-localstorage name="password-generator-secret" value="{{secret}}" id="secretStorage" autoSaveDisabled></core-localstorage>
+            <core-localstorage name="password-generator-checkbox" value="{{saveSecret}}" id="checkboxStorage"></core-localstorage>
+
+            <!-- Alias input -->
+            <paper-input id="aliasInput" label="Alias" floatingLabel value="{{alias}}"></paper-input>
+
+            <!-- Secret input -->
+            <paper-input-decorator label="Secret" floatingLabel>
+                <input type="{{secretInputType}}" id="secretInput" value="{{secret}}">
+            </paper-input-decorator>
+
+            <!-- Show secret checkbox -->
+            <core-label horizontal layout>
+                <paper-checkbox checked="{{showSecret}}" on-change="{{showSecretCheckboxChange}}" for></paper-checkbox>
+                <div vertical layout>
+                    <h4>Show secret</h4>
+                    <div>Sets secret to be visible instead of hidden.</div>
+                </div>
+            </core-label>
+
+
+            <!-- Save secret checkbox -->
+            <core-label horizontal layout>
+                <paper-checkbox checked="{{saveSecret}}" on-change="{{saveSecretCheckboxChange}}" for></paper-checkbox>
+                <div vertical layout>
+                    <h4>Save secret</h4>
+                    <div>Saves secret into browser's localstorage memory.</div>
+                </div>
+            </core-label>
+
+            <!-- Buttons -->
+            <div class="buttons" horizontal layout>
+                <paper-button on-click="{{clear}}" raised flex>Clear</paper-button>
+                <paper-button on-click="{{generate}}" class="primary" raised flex>Generate</paper-button>
+            </div>
+
+            <!-- Toasts -->
+            <paper-toast id="missingInputsToast" text="Please fill in both the alias and your secret!"></paper-toast>
+
+            <!-- Dialogs -->
+            <paper-action-dialog id="saveSecretWarningDialog" heading="WARNING!" layered="false" backdrop>
+                <p>
+                    Storing your secret in local storage means your secret may become visible to anyone with physical
+                    access to your computer! Please make sure you only keep this setting checked on your personal and
+                    secure computer. Using the Clear data button will remove this setting and saved secret from local
+                    storage.
+                </p>
+                <paper-button affirmative>I understand the risks</paper-button>
+            </paper-action-dialog>
+
+            <paper-action-dialog id="passwordDialog" heading="Your password:" layered="false" backdrop>
+                <p class="password"><span>{{password}}</span></p>
+                <p>You can now select your password and copy it to your clipboard. Also, if you're on a publicly accessible computer, don't forget to clear the generator form before you leave the page!</p>
+                <paper-button dismissive>Close</paper-button>
+                <paper-button on-click="{{clear}}" class="primary" affirmative>Close & Clear</paper-button>
+            </paper-action-dialog>
+
+
+        </div>
+
+    </template>
+
+    <!-- Scripts -->
+    <script>
+        Polymer('generator-page', {
+
+            /* ------------------------------------------------------------------------------------------------------ */
+            /* Inherited functions */
+
+            /**
+             * Constructor - initialize element.
+             */
+            ready: function () {
+
+                // Alias value
+                this.alias = '';
+
+                // Secret value
+                this.secret = '';
+
+                // Password value
+                this.password = '';
+
+                // Secret input type (password/text)
+                this.secretInputType = 'password';
+
+                // Show/hide secret toggle
+                this.showSecret = false;
+
+                // Save/forget secret toggle
+                this.saveSecret = false;
+
+            },
+
+            /**
+             * Focus on alias input when element is attached to DOM.
+             */
+            attached: function () {
+                this.$.aliasInput.focus();
+            },
+
+            /* ------------------------------------------------------------------------------------------------------ */
+            /* Custom functions */
+
+            /**
+             * Clear button function.
+             */
+            clear: function () {
+                this.alias = '';
+                this.secret = '';
+                this.password = '';
+                this.showSecret = false;
+                this.saveSecret = false;
+                this.$.secretStorage.value = '';
+                this.$.secretStorage.save();
+            },
+
+            /**
+             * Generate button function.
+             */
+            generate: function () {
+                if (this.alias.length > 0) {
+                    if (this.secret.length > 0) {
+                        this.password = Base64.encode(Sha256.hash(this.alias + this.secret)).substring(17,49)
+                        this.$.passwordDialog.open();
+                        if (this.saveSecret) {
+                            this.$.secretStorage.value = this.secret;
+                            this.$.secretStorage.save();
+                        }
+                    } else {
+                        this.$.secretInput.focus();
+                        this.$.missingInputsToast.show();
+                    }
+                } else {
+                    this.$.aliasInput.focus();
+                    this.$.missingInputsToast.show();
+                }
+            },
+
+            /**
+             * On show secret checkbox change.
+             *
+             * @param event
+             */
+            showSecretCheckboxChange: function (event) {
+                if (this.showSecret == true) {
+                    this.secretInputType = 'input';
+                } else {
+                    this.secretInputType = 'password';
+                }
+            },
+
+            /**
+             * On save secret checkbox change.
+             *
+             * @param event
+             */
+            saveSecretCheckboxChange: function (event) {
+                if (this.saveSecret == true) {
+                    this.$.saveSecretWarningDialog.open();
+                } else {
+                    this.$.secretStorage.value = '';
+                    this.$.secretStorage.save();
+                }
+            }
+
+        });
+    </script>
+
+</polymer-element>
