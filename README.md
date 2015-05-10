@@ -2,6 +2,6 @@
 
 My first Polymer application. Uses alias + secret string combination to generate unique and strong passwords.
 
-> **Live version:** [https://pass.webdesign-studio.sk](https://pass.webdesign-studio.sk)
+> **Live version:** [https://password-generator.webapp.sk](https://password-generator.webapp.sk)
 
-> **App description:** [https://pass.webdesign-studio.sk/#about](https://pass.webdesign-studio.sk/#about)
+> **App description:** [https://password-generator.webapp.sk/#about](https://password-generator.webapp.sk/#about)

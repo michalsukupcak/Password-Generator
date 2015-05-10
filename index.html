@@ -81,7 +81,7 @@
                 <div class="content">
 
                     <!-- Router -->
-                    <app-router core-animated-pages transitions="cross-fade" on-state-change="{{appStateChange}}">
+                    <app-router on-state-change="{{appStateChange}}">
                         <app-route path="/generator" import="./app/components/generator/Generator.html" element="generator-page"></app-route>
                         <app-route path="/about" import="./app/components/about/About.html" element="about-page"></app-route>
                         <app-route path="*" redirect="/generator"></app-route>
