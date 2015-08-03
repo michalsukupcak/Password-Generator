@@ -15772,10 +15772,13 @@ styles. All other styles should exist as single lines."
         }
 
         /* Buttons */
-        section#generator div paper-button {
+        section#generator div.buttons {
+            padding: 0 2px;
+        }
+        section#generator div.buttons paper-button {
             background: white;
         }
-        section#generator div paper-button.primary {
+        section#generator div.buttons paper-button.primary {
             background: #1E86BD;
             color: white;
         }
@@ -15889,9 +15892,9 @@ styles. All other styles should exist as single lines."
                 </div>
 
                 
-                <div class="horizontal center-justified layout">
-                    <paper-button on-click="_clearClickHandler" raised="">Clear</paper-button>
-                    <paper-button on-click="_generateClickHandler" class="primary" raised="">Generate</paper-button>
+                <div class="buttons horizontal center-justified layout">
+                    <paper-button on-click="_clearClickHandler" class="flex" raised="">Clear</paper-button>
+                    <paper-button on-click="_generateClickHandler" class="primary flex" raised="">Generate</paper-button>
                 </div>
 
             </section>
