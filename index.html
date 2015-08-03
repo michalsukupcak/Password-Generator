@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+
+        <!-- ------------------------------------------- -->
+        <!-- Meta tags -->
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Password Generator</title>
+        <meta name="theme-color" content="#303F9F">
+        <link rel="manifest" href="manifest.json">
+        <meta name="msapplication-TileColor" content="#3372DF">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="application-name" content="Password Generator">
+        <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Fingerprint Calculator">
+        <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+        <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+
+        <!-- ------------------------------------------- -->
+        <!-- File imports -->
+        <script src="./bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <link rel="stylesheet" href="./styles/main.css">
+        <link rel="import" href="./elements/elements.html">
+        <!--<link rel="import" href="./elements/elements.vulcanized.html">-->
+
+    </head>
+    <body unresolved class="fullbleed layout vertical">
+
+        <!-- ------------------------------------------- -->
+        <!-- Application template -->
+        <span id="browser-sync-binding"></span>
+        <template is="dom-bind" id="app">
+
+            <!-- ------------------------------------------- -->
+            <!-- App scaffold -->
+            <paper-header-panel>
+
+                <!-- Toolbar -->
+                <paper-toolbar mode="waterfall">
+                    <template is="dom-if" if="{{showBackArrowIcon}}">
+                        <paper-icon-button icon="arrow-back" on-click="_backArrowClickHandler"></paper-icon-button>
+                    </template>
+                    <span>{{appTitle}}</span>
+                    <span class="flex"></span>
+                    <template is="dom-if" if="{{showInfoIcon}}">
+                        <paper-icon-button icon="info" on-click="_infoClickHandler"></paper-icon-button>
+                    </template>
+                </paper-toolbar>
+
+                <!-- Content -->
+                <div class="content">
+                    <x-app id="app" __page="{{__page}}"></x-app>
+                </div>
+
+            </paper-header-panel>
+
+        </template>
+
+        <!-- ------------------------------------------- -->
+        <!-- Application javascripts -->
+        <script src="./scripts/base64.js"></script>
+        <script src="./scripts/sha256.js"></script>
+        <script src="./scripts/app.js"></script>
+
+    </body>
+</html>
