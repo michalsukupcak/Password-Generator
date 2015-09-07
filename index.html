@@ -7,25 +7,25 @@
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Password Generator</title>
         <meta name="theme-color" content="#1E86BD">
-        <link rel="manifest" href="manifest.json">
         <meta name="msapplication-TileColor" content="#1E86BD">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="application-name" content="Password Generator">
-        <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="Fingerprint Calculator">
-        <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
         <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+        <title>Password Generator</title>
 
         <!-- ------------------------------------------- -->
         <!-- File imports -->
         <script src="./bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="./scripts/constants.js"></script>
+        <link rel="manifest" href="manifest.json">
+        <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+        <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
         <link rel="stylesheet" href="./styles/main.css">
-        <link rel="import" href="./elements/elements.html">
-        <!--<link rel="import" href="./elements/elements.vulcanized.html">-->
+        <link rel="import" href="./build/elements.html">
 
     </head>
     <body unresolved class="fullbleed layout vertical">
@@ -41,19 +41,18 @@
 
                 <!-- Toolbar -->
                 <paper-toolbar mode="waterfall">
-                    <template is="dom-if" if="{{showBackArrowIcon}}">
-                        <paper-icon-button icon="arrow-back" on-click="_backArrowClickHandler"></paper-icon-button>
-                    </template>
-                    <span>{{appTitle}}</span>
+                    <paper-icon-button icon="arrow-back" on-click="backArrowClickHandler" hidden$="[[!showBackArrowIcon]]"></paper-icon-button>
+                    <span>[[appTitle]]</span>
                     <span class="flex"></span>
-                    <template is="dom-if" if="{{showInfoIcon}}">
-                        <paper-icon-button icon="info" on-click="_infoClickHandler"></paper-icon-button>
-                    </template>
+                    <paper-icon-button icon="info" on-click="infoClickHandler" hidden$="[[!showInfoIcon]]"></paper-icon-button>
                 </paper-toolbar>
 
                 <!-- Content -->
                 <div class="content">
-                    <x-app id="app" __page="{{__page}}"></x-app>
+                    <neon-animated-pages id="pages" selected="{{__page}}" entry-animation="fade-in-animation" exit-animation="fade-out-animation">
+                        <section><x-generator></x-generator></section>
+                        <section><x-about></x-about></section>
+                    </neon-animated-pages>
                 </div>
 
             </paper-header-panel>
