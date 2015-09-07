@@ -3,3 +3,7 @@ body {
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #333;
 }
+
+::-webkit-scrollbar { background: transparent; width: 3px; }
+::-webkit-scrollbar-button { background: transparent; height: 0px; }
+::-webkit-scrollbar-thumb { background: #1E86BD; cursor: pointer; }
