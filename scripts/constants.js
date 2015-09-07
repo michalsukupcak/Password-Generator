@@ -3,4 +3,4 @@
  *
  * @type {string}
  */
-var __VERSION = '3.1.1';
+var __VERSION = '3.1.2';

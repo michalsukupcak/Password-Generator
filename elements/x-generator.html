@@ -38,6 +38,12 @@
             background: white;
             max-width: 480px;
         }
+        paper-dialog paper-dialog-scrollable {
+            text-align: justify;
+        }
+        paper-dialog div.buttons {
+            margin-bottom: 10px;
+        }
         paper-dialog#saveWarningDialog paper-button {
             color: red;
         }
@@ -89,14 +95,14 @@
 
         <!-- ------------------------------------------- -->
         <!-- Save warning dialog -->
-        <paper-dialog id="saveWarningDialog" modal>
+        <paper-dialog id="saveWarningDialog" entry-animation="scale-up-animation" exit-animation="scale-down-animation" modal modal>
             <h2>WARNING</h2>
-            <div>
+            <paper-dialog-scrollable>
                 Storing your secret in local storage means your secret may become visible to anyone with physical
                 access to your computer! Please make sure you only keep this setting checked on your personal and
                 secure computer. Using the Clear data button will remove this setting and saved secret from local
                 storage.
-            </div>
+            </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-button dialog-dismiss>I understand the risks</paper-button>
             </div>
@@ -104,13 +110,13 @@
 
         <!-- ------------------------------------------- -->
         <!-- Response dialog -->
-        <paper-dialog id="passwordDialog" modal>
+        <paper-dialog id="passwordDialog" entry-animation="scale-up-animation" exit-animation="scale-down-animation" modal modal>
             <h2>Your password:</h2>
-            <div>
+            <paper-dialog-scrollable>
                 <div id="password">[[password]]</div>
                 You can now select your password and copy it to your clipboard. Also, if you're on a publicly
                 accessible computer, don't forget to clear the generator form before you leave the app!
-            </div>
+            </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-button dialog-dismiss>Close</paper-button>
             </div>

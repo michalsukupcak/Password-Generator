@@ -11298,6 +11298,32 @@ element.
 -->
 
 <!--
+`paper-dialog-scrollable` implements a scrolling area used in a Material Design dialog. It shows
+a divider at the top and/or bottom indicating more content, depending on scroll position. Use this
+together with elements implementing `Polymer.PaperDialogBehavior`.
+
+    <paper-dialog-impl>
+      <h2>Header</h2>
+      <paper-dialog-scrollable>
+        Lorem ipsum...
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button>OK</paper-button>
+      </div>
+    </paper-dialog-impl>
+
+It shows a top divider after scrolling if it is not the first child in its parent container,
+indicating there is more content above. It shows a bottom divider if it is scrollable and it is not
+the last child in its parent container, indicating there is more content below. The bottom divider
+is hidden if it is scrolled to the bottom.
+
+@group Paper Elements
+@element paper-dialog-scrollable
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<!--
 Material Design: <a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a>
 
 `paper-icon-button` is a button with an image placed at the center. When the user touches
@@ -15634,6 +15660,117 @@ Configuration:
 })();
 
 </script>
+<dom-module id="paper-dialog-scrollable" assetpath="../bower_components/paper-dialog-scrollable/">
+
+  <style>
+
+    :host {
+      display: block;
+      position: relative;
+    }
+
+    :host(.is-scrolled:not(:first-child))::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--divider-color);
+    }
+
+    :host(.can-scroll:not(.scrolled-to-bottom):not(:last-child))::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--divider-color);
+    }
+
+    .scrollable {
+      padding: 0 24px;
+
+      @apply(--layout-scroll);
+
+      @apply(--paper-dialog-scrollable);
+    }
+  </style>
+
+  <template>
+    <div id="scrollable" class="scrollable">
+      <content></content>
+    </div>
+  </template>
+
+</dom-module>
+
+<script>
+
+(function() {
+
+  Polymer({
+
+    is: 'paper-dialog-scrollable',
+
+    properties: {
+
+      /**
+       * The dialog element that implements `Polymer.PaperDialogBehavior` containing this element.
+       * @type {?Node}
+       */
+      dialogElement: {
+        type: Object,
+        value: function() {
+          return this.parentNode;
+        }
+      }
+
+    },
+
+    listeners: {
+      'scrollable.scroll': '_onScroll',
+      'iron-resize': '_onIronResize'
+    },
+
+    /**
+     * Returns the scrolling element.
+     */
+    get scrollTarget() {
+      return this.$.scrollable;
+    },
+
+    attached: function() {
+      this.classList.add('no-padding');
+      // Set itself to the overlay sizing target
+      this.dialogElement.sizingTarget = this.scrollTarget;
+      // If the host is sized, fit the scrollable area to the container. Otherwise let it be
+      // its natural size.
+      requestAnimationFrame(function() {
+        if (this.offsetHeight > 0) {
+          this.$.scrollable.classList.add('fit');
+        }
+        this._scroll();
+      }.bind(this));
+    },
+
+    _scroll: function() {
+      this.toggleClass('is-scrolled', this.scrollTarget.scrollTop > 0);
+      this.toggleClass('can-scroll', this.scrollTarget.offsetHeight < this.scrollTarget.scrollHeight);
+      this.toggleClass('scrolled-to-bottom',
+        this.scrollTarget.scrollTop + this.scrollTarget.offsetHeight >= this.scrollTarget.scrollHeight);
+    },
+
+    _onScroll: function() {
+      this._scroll();
+    }
+
+  })
+
+})();
+
+</script>
 <dom-module id="paper-icon-button" assetpath="../bower_components/paper-icon-button/">
   <style>
 
@@ -17662,6 +17799,12 @@ Configuration:
             background: white;
             max-width: 480px;
         }
+        paper-dialog paper-dialog-scrollable {
+            text-align: justify;
+        }
+        paper-dialog div.buttons {
+            margin-bottom: 10px;
+        }
         paper-dialog#saveWarningDialog paper-button {
             color: red;
         }
@@ -17713,14 +17856,14 @@ Configuration:
 
         <!-- ------------------------------------------- -->
         <!-- Save warning dialog -->
-        <paper-dialog id="saveWarningDialog" modal="">
+        <paper-dialog id="saveWarningDialog" entry-animation="scale-up-animation" exit-animation="scale-down-animation" modal="">
             <h2>WARNING</h2>
-            <div>
+            <paper-dialog-scrollable>
                 Storing your secret in local storage means your secret may become visible to anyone with physical
                 access to your computer! Please make sure you only keep this setting checked on your personal and
                 secure computer. Using the Clear data button will remove this setting and saved secret from local
                 storage.
-            </div>
+            </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-button dialog-dismiss="">I understand the risks</paper-button>
             </div>
@@ -17728,13 +17871,13 @@ Configuration:
 
         <!-- ------------------------------------------- -->
         <!-- Response dialog -->
-        <paper-dialog id="passwordDialog" modal="">
+        <paper-dialog id="passwordDialog" entry-animation="scale-up-animation" exit-animation="scale-down-animation" modal="">
             <h2>Your password:</h2>
-            <div>
+            <paper-dialog-scrollable>
                 <div id="password">[[password]]</div>
                 You can now select your password and copy it to your clipboard. Also, if you're on a publicly
                 accessible computer, don't forget to clear the generator form before you leave the app!
-            </div>
+            </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-button dialog-dismiss="">Close</paper-button>
             </div>
