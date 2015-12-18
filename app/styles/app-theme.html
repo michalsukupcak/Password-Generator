@@ -92,7 +92,7 @@
     }
     paper-header-panel main neon-animated-pages section[data-section="result"] div#password {
         background: white;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        border: 1px solid #E5E5E5;
         padding: 16px;
         text-align: center;
         transition: .2s ease;
@@ -111,19 +111,27 @@
         background: white;
         max-width: 768px;
     }
-    paper-dialog paper-dialog-scrollable {}
-    paper-dialog paper-dialog-scrollable h1 {
-        margin: 16px 0 8px 0;
+    paper-dialog h1 {
+        margin: 32px 0 28px 0;
         text-align: center;
     }
+    paper-dialog paper-dialog-scrollable {}
     paper-dialog paper-dialog-scrollable em {
         display: block;
+        font-size: 1.2em;
+        font-style: italic;
+        font-weight: normal;
         text-align: center;
     }
-    paper-dialog paper-dialog-scrollable h2 {
-        margin: 16px 0;
+    paper-dialog paper-dialog-scrollable h3 {
+        font-size: 1.4em;
+        font-weight: 500;
+        margin: 32px 0 24px 0;
+        text-align: center;
     }
-    paper-dialog paper-dialog-scrollable ul {}
+    paper-dialog paper-dialog-scrollable ul {
+        padding-left: 24px;
+    }
     paper-dialog paper-dialog-scrollable ul li {}
     paper-dialog paper-dialog-scrollable hr {
         border: none;
