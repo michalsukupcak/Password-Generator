@@ -1,0 +1,156 @@
+<style is="custom-style">
+
+    /* -------------------------------------------------------------------------------------------------------------- */
+    /* Application theme */
+    :root {
+        --dark-primary-color: #303F9F;
+        --default-primary-color: #1E86BD;
+        --light-primary-color: #C5CAE9;
+        --text-primary-color: #ffffff; /*text/icons*/
+        --accent-color: #FF4081;
+        --primary-background-color: #c5cae9;
+        --primary-text-color: #212121;
+        --secondary-text-color: #727272;
+        --disabled-text-color: #bdbdbd;
+        --divider-color: #B6B6B6;
+
+        /* Components */
+
+        /* paper-drawer-panel */
+        --drawer-menu-color: #ffffff;
+        --drawer-border-color: 1px solid #ccc;
+        --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
+
+        /* paper-menu */
+        --paper-menu-background-color: #fff;
+        --menu-link-color: #111111;
+    }
+
+    /* -------------------------------------------------------------------------------------------------------------- */
+    /* General styles */
+    paper-header-panel {}
+
+    /* --------------------------------------------------- */
+    /* Toolbar */
+    paper-header-panel paper-toolbar {}
+    paper-header-panel paper-toolbar div {
+        font-size: 1.2em;
+        padding: 0 0 0 12px;
+    }
+    paper-header-panel paper-toolbar span {}
+    paper-header-panel paper-toolbar paper-menu-button {
+        padding-right: 0;
+    }
+    paper-header-panel paper-toolbar paper-menu-button paper-icon-button {
+        padding-right: 0;
+    }
+    paper-header-panel paper-toolbar paper-menu-button paper-menu {}
+    paper-header-panel paper-toolbar paper-menu-button paper-menu paper-item {
+        cursor: pointer;
+    }
+
+    /* --------------------------------------------------- */
+    /* Main */
+    paper-header-panel main {
+        margin: 16px auto auto auto;
+        max-width: 320px;
+    }
+    paper-header-panel main neon-animated-pages {
+        height: 400px;
+    }
+    paper-header-panel main neon-animated-pages section {}
+
+    /* Buttons */
+    paper-header-panel main neon-animated-pages section paper-button {
+        background: white;
+    }
+    paper-header-panel main neon-animated-pages section paper-button.primary {
+        color: white;
+        background: var(--default-primary-color);
+    }
+
+    /* --------------------------------------------------- */
+    /* Form */
+    paper-header-panel main neon-animated-pages section[data-section="form"] {  }
+    paper-header-panel main neon-animated-pages section[data-section="form"] paper-input {}
+    paper-header-panel main neon-animated-pages section[data-section="form"] paper-checkbox {
+        margin: 32px 0 0 4px;
+    }
+    paper-header-panel main neon-animated-pages section[data-section="form"] p {
+        color: #999;
+        margin: 8px 0 0 30px;
+    }
+    paper-header-panel main neon-animated-pages section[data-section="form"] div {
+        margin: 32px 0 0 0;
+    }
+
+    /* --------------------------------------------------- */
+    /* Result */
+    paper-header-panel main neon-animated-pages section[data-section="result"] {}
+    paper-header-panel main neon-animated-pages section[data-section="result"] h1 {
+        text-align: center;
+    }
+    paper-header-panel main neon-animated-pages section[data-section="result"] div#password {
+        background: white;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        padding: 16px;
+        text-align: center;
+        transition: .2s ease;
+        word-break: break-all;
+    }
+    paper-header-panel main neon-animated-pages section[data-section="result"] p {
+        text-align: justify;
+    }
+    paper-header-panel main neon-animated-pages section[data-section="result"] p strong {
+        cursor: pointer;
+    }
+
+    /* --------------------------------------------------- */
+    /* Dialogs */
+    paper-dialog {
+        background: white;
+        max-width: 768px;
+    }
+    paper-dialog paper-dialog-scrollable {}
+    paper-dialog paper-dialog-scrollable h1 {
+        margin: 16px 0 8px 0;
+        text-align: center;
+    }
+    paper-dialog paper-dialog-scrollable em {
+        display: block;
+        text-align: center;
+    }
+    paper-dialog paper-dialog-scrollable h2 {
+        margin: 16px 0;
+    }
+    paper-dialog paper-dialog-scrollable ul {}
+    paper-dialog paper-dialog-scrollable ul li {}
+    paper-dialog paper-dialog-scrollable hr {
+        border: none;
+        border-top: 1px solid #E5E5E5;
+        margin: 20px 0;
+    }
+    paper-dialog paper-dialog-scrollable p {}
+    paper-dialog paper-dialog-scrollable blockquote {
+        border-left: 8px solid #E5E5E5;
+        color: #CCC;
+        margin: 0 0 0 4px;
+        padding: 0 0 0 8px;
+    }
+    paper-dialog paper-dialog-scrollable blockquote span {
+        color: #666;
+    }
+    paper-dialog paper-dialog-scrollable a {
+        color: #111;
+        transition: .2s ease;
+    }
+    paper-dialog paper-dialog-scrollable a:hover {
+        color: var(--default-primary-color);
+    }
+    paper-dialog div.buttons {}
+    paper-dialog div.buttons paper-button {}
+    paper-dialog div.buttons paper-button.warning {
+        color: red;
+    }
+
+</style>
