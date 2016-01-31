@@ -3,6 +3,7 @@
     /* -------------------------------------------------------------------------------------------------------------- */
     /* Application theme */
     :root {
+
         --dark-primary-color: #303F9F;
         --default-primary-color: #1E86BD;
         --light-primary-color: #C5CAE9;
@@ -14,14 +15,10 @@
         --disabled-text-color: #bdbdbd;
         --divider-color: #B6B6B6;
 
-        /* Components */
-
-        /* paper-drawer-panel */
-        --drawer-menu-color: #ffffff;
+        --drawer-menu-cologulr: #ffffff;
         --drawer-border-color: 1px solid #ccc;
         --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
 
-        /* paper-menu */
         --paper-menu-background-color: #fff;
         --menu-link-color: #111111;
     }
@@ -32,7 +29,10 @@
 
     /* --------------------------------------------------- */
     /* Toolbar */
-    paper-header-panel paper-toolbar {}
+    paper-header-panel paper-toolbar {
+        background: #1E86BD;
+        color: white;
+    }
     paper-header-panel paper-toolbar div {
         font-size: 1.2em;
         padding: 0 0 0 12px;

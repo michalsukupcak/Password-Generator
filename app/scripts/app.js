@@ -85,11 +85,12 @@
         }
     };
 
-    // Show toast when cacheing is complete
-    app.displayInstalledToast = function () {
-        if (!Polymer.dom(document).querySelector('platinum-sw-cache').disabled) {
-            Polymer.dom(document).querySelector('#caching-complete').show();
-        }
-    };
+    // Focus alias input when app is loaded (wait a bit for UI load)
+    app.addEventListener('dom-change', function () {
+        //this.$.alias.$.input.focus();
+        this.async(function () {
+            this.$.alias.$.input.focus();
+        });
+    });
 
 })(document);

@@ -239,19 +239,6 @@
                 auto-save-disabled
             ></iron-localstorage>
 
-            <!-- --------------------------------------------------------------------------------------------------- -->
-            <!-- Service workers -->
-            <platinum-sw-register
-                auto-register
-                clients-claim
-                skip-waiting
-                on-service-worker-installed="displayInstalledToast">
-                <platinum-sw-cache
-                    default-cache-strategy="fastest"
-                    cache-config-file="cache-config.json"
-                ></platinum-sw-cache>
-            </platinum-sw-register>
-
         </template>
 
         <!-- build:js scripts/app.js -->
