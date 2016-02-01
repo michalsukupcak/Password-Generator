@@ -54,6 +54,7 @@
                 this.$.secretStorage.save();
             }
             if (this.clipboard === true) {
+                this.copy();
                 this.$.clipboard.click();
             }
             this.section = 'result';
