@@ -1,0 +1,662 @@
+<!-- Element imports -->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animatable.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="x-base64/x-base64.html">
+<link rel="import" href="x-checkbox/x-checkbox.html">
+<link rel="import" href="x-clipboard/x-clipboard.html">
+<link rel="import" href="x-sha256/x-sha256.html">
+
+<!-- <x-app> element -->
+<dom-module id="x-app">
+  <template>
+
+    <!-- CSS -->
+    <style>
+
+      /* Element color scheme */
+      :root {
+        --primary-color: #1E86BD;
+        --description-color: #777;
+        --password-background-color: #EEE;
+        --password-border-color: #CCC;
+        --footer-border-color: #CCC;
+        --footer-button-text-color: #AAA;
+        --dialog-horizontal-separator-color: #EEE;
+        --dialog-blockquote-border-color: #EEE;
+        --dialog-blockquote-text-color: #CCC;
+        --dialog-blockquote-comment-color: #666;
+      }
+
+      /* Element */
+      :host {
+        display: block;
+      }
+
+      /* App layout */
+      app-header-layout {}
+
+      /* Toolbar */
+      app-header-layout app-header {}
+      app-header-layout app-header app-toolbar { background: var(--primary-color); color: white; }
+      app-header-layout app-header app-toolbar div[main-title] { text-align: center; }
+
+      /* Body */
+      app-header-layout main {}
+
+      /* Pages */
+      app-header-layout main neon-animated-pages {}
+      app-header-layout main neon-animated-pages .iron-selected { position: static; }
+      app-header-layout main neon-animated-pages neon-animatable {}
+
+      /* Material wrapper */
+      app-header-layout main neon-animated-pages neon-animatable paper-material { background: white; box-sizing: border-box; margin: 24px auto auto auto; max-width: 420px; padding: 12px 36px; }
+
+      /* Alias & secret inputs */
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.inputs { margin: 12px 0 0 0; }
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.inputs paper-input {}
+
+      /* Checkboxes */
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.checkboxes { margin: 24px 0 12px 0; }
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.checkboxes x-checkbox { margin: 12px 0; }
+
+      /* Buttons */
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.buttons { text-align: center; }
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.buttons paper-button {}
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.buttons paper-button.primary { color: var(--primary-color); }
+
+      /* Password box */
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.password {}
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.password h1 { font-weight: 300; margin: 6px 0 12px 0; text-align: center; }
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.password div { background: var(--password-background-color); border: 1px dashed var(--password-border-color); border-radius: 3px; font-size: .8em; max-width: 320px; overflow: auto; padding: 6px 12px; text-align: center; }
+      app-header-layout main neon-animated-pages neon-animatable paper-material section.password p { font-size: .8em; }
+
+      /* Footer */
+      app-header-layout main footer { margin: 12px auto; max-width: 420px; text-align: center; }
+      app-header-layout main footer paper-button,
+      app-header-layout main footer span { color: var(--footer-button-text-color); font-size: .8em; }
+
+      /* Dialogs */
+      paper-dialog {}
+      paper-dialog h2 {}
+      paper-dialog paper-dialog-scrollable { max-width: 480px; }
+      paper-dialog paper-dialog-scrollable hr { border: none; border-top: 1px solid var(--dialog-horizontal-separator-color); }
+      paper-dialog paper-dialog-scrollable blockquote { border-left: 8px solid var(--dialog-blockquote-border-color); color: var(--dialog-blockquote-text-color); margin: 0 0 16px 4px; padding: 0 0 0 8px; }
+      paper-dialog paper-dialog-scrollable blockquote span { color: var(--dialog-blockquote-comment-color); }
+      paper-dialog paper-dialog-scrollable a { color: var(--primary-color); }
+      paper-dialog paper-dialog-scrollable a:hover { text-decoration: underline; }
+      paper-dialog paper-dialog-scrollable p {}
+      paper-dialog paper-dialog-scrollable div.center { text-align: center; }
+      paper-dialog div.buttons {}
+      paper-dialog div.buttons paper-button {}
+
+      /* Mobile layout */
+      @media (max-width: 420px) {
+
+        /* Remove right padding so the overflow icon has symmetrical padding to main title on mobile */
+        app-header-layout app-header app-toolbar { padding-right: 0; }
+
+        /* Add padding to main title and align it to left on mobile */
+        app-header-layout app-header app-toolbar div[main-title] { padding-left: 6px; text-align: left; }
+
+        app-header-layout app-header app-toolbar { z-index: 1; }
+        app-header-layout app-header app-toolbar paper-menu-button { z-index: 2; }
+        app-header-layout app-header app-toolbar paper-menu-button div.dropdown-content {}
+        app-header-layout app-header app-toolbar paper-menu-button div.dropdown-content paper-button { color: black; display: block; font-size: .8em; text-transform: none; }
+
+        /* Remove top margin for material wrapper on mobile */
+        app-header-layout main neon-animated-pages neon-animatable paper-material { margin-top: 0; }
+
+      }
+
+    </style>
+
+    <!-- App layout -->
+    <app-header-layout fullbleed>
+
+      <!-- Toolbar -->
+      <app-header fixed shadow>
+        <app-toolbar>
+
+          <!-- Title -->
+          <div main-title>
+            Password Generator
+          </div>
+
+          <!-- Overflow menu (mobile only) -->
+          <template is="dom-if" if="[[isMobile]]">
+            <paper-menu-button id="overflowMenu" horizontal-align="right" horizontal-offset="6" vertical-offset="3">
+              <paper-icon-button icon="icons:more-vert" class="dropdown-trigger"></paper-icon-button>
+              <div class="dropdown-content">
+                <paper-button on-tap="_openSecurityDialog">Security</paper-button>
+                <paper-button on-tap="_openSourceCodeDialog">Source Code</paper-button>
+                <paper-button on-tap="_openAndroidDialog">Android</paper-button>
+              </div>
+            </paper-menu-button>
+          </template>
+
+        </app-toolbar>
+      </app-header>
+
+      <!-- Body -->
+      <main>
+
+        <!-- Pages -->
+        <neon-animated-pages id="pages" selected="{{page}}" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+
+          <!-- Form page -->
+          <neon-animatable>
+            <paper-material>
+
+              <!-- Inputs -->
+              <section class="inputs">
+                <form id="form" is="iron-form">
+
+                  <!-- Alias -->
+                  <paper-input
+                    label="Alias"
+                    value="{{alias}}"
+                    id="aliasInput"
+                    required
+                    error-message="Please fill in an alias!"
+                    on-keyup="_aliasKeyUp">
+                  </paper-input>
+
+                  <!-- Secret -->
+                  <paper-input
+                    label="Secret"
+                    value="{{secret}}"
+                    id="secretInput"
+                    type="password"
+                    required
+                    error-message="Please fill in a secret!"
+                    on-keyup="_secretKeyUp">
+                  </paper-input>
+
+                </form>
+              </section>
+
+              <!-- Checkboxes -->
+              <section class="checkboxes">
+
+                <!-- Save secret -->
+                <x-checkbox
+                  checked="{{saveSecret}}"
+                  description-checked="Any time you click 'Generate' button, current secret value will be saved in browser's local storage memory."
+                  description-unchecked="Your secret will not be stored anywhere after you close the app.">
+                  Save secret
+                </x-checkbox>
+
+                <!-- Copy to clipboard -->
+                <x-checkbox
+                  checked="{{copyToClipboard}}"
+                  description-checked="Generated password will be copied to your clipboard (CTRL+C command)."
+                  description-unchecked="Generated password will not be copied to your clipboard.">
+                  Copy to clipboard
+                </x-checkbox>
+
+                <!-- Show password -->
+                <x-checkbox
+                  checked="{{showPassword}}"
+                  description-checked="Generated password will be displayed on your device's screen."
+                  description-unchecked="Generated password will not be visible.">
+                  Show password
+                </x-checkbox>
+
+              </section>
+
+              <!-- Generate & Clear buttons -->
+              <section class="buttons">
+                <paper-button on-tap="_generate" class="primary">Generate</paper-button>
+                <paper-button on-tap="_clear">Clear</paper-button>
+              </section>
+
+            </paper-material>
+          </neon-animatable>
+
+          <!-- Password page -->
+          <neon-animatable>
+            <paper-material>
+
+              <!-- Password box -->
+              <section class="password">
+                <h1>Your password:</h1>
+                <div>[[password]]</div>
+                <p>
+                  You can now select your password and copy it to your clipboard, or use the
+                  <strong>"Copy to clipboard"</strong> button below.<br>
+                  <br>
+                  Also, if you're on a
+                  publicly accessible computer, don't forget to clear the generator form before you
+                  leave the app!
+                </p>
+              </section>
+
+              <!-- Copy & Back buttons -->
+              <section class="buttons">
+                <paper-button on-tap="_copyToClipboard" class="primary" id="copyToClipboardButton" data-clipboard-text="xda">Copy to clipboard</paper-button>
+                <paper-button on-tap="_back">Back</paper-button>
+              </section>
+
+            </paper-material>
+          </neon-animatable>
+
+        </neon-animated-pages>
+
+        <!-- Footer (desktop only) -->
+        <template is="dom-if" if="[[!isMobile]]">
+          <footer>
+            <paper-button on-tap="_openSecurityDialog">Security</paper-button>
+            <span>//</span>
+            <paper-button on-tap="_openSourceCodeDialog">Source code</paper-button>
+            <span>//</span>
+            <paper-button on-tap="_openAndroidDialog">Android</paper-button>
+          </footer>
+        </template>
+
+      </main>
+    </app-header-layout>
+
+    <!-- Security dialog -->
+    <paper-dialog id="securityDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal>
+      <h2>Security</h2>
+      <paper-dialog-scrollable>
+        <em>Simplest way to generate secure passwords on the go!</em>
+        <ul>
+          <li><strong>Secure</strong> - Everything is done inside your browser, no data leave your device, either to our servers, or anywhere else.</li>
+          <li><strong>Easy to use</strong> - Well designed and polished UI for both desktops and mobile devices.</li>
+          <li><strong>Helpful</strong> - No need to remember lots of complicated passwords to be secure.</li>
+          <li><strong>Fast</strong> - Your password is generated instantly.</li>
+        </ul>
+        <hr>
+        <h3>What does it do?</h3>
+        <p>
+          Generator helps you with the problem of creating and remembering unique passwords for all the
+          social networks, online services and websites you need passwords for. With just the help of an
+          easy to remember alias and one passphrase, generator creates unique strong passwords for your
+          services.
+        </p>
+        <p>
+          <strong>And what if you forget the generated password?</strong> That's the best part: You don't
+          even have to remember it! Just come back to the generator and type in your alias and secret, and
+          generator's algorithm generates the same password for you once again.
+        </p>
+        <hr>
+        <h3>How it works?</h3>
+        <p>
+          All you need to remember for a website is its alias, for example its domain or service name
+          (facebook for https://facebook.com, onedrive for Microsoft's One Drive, etc..) and
+          <strong>one</strong> strong secret passphrase. Generator then combines your alias and secret to
+          together and generates a unique strong password for you. For the more tech-savvy of you, this is
+          the meta algorithm. You can even create your own version of generator based on this algorithm:
+        </p>
+        <blockquote>
+          <span>String alias = ...;</span> // Get alias<br>
+          <span>String secret = ...;</span> // Get secret<br>
+          <span>String s = alias + secret;</span> // Simply join alias and secret into one string<br>
+          <span>String hash = hash('sha256',s);</span> // Generate hash of string s using SHA256 algorithm<br>
+          <span>String base = base64Encode(hash);</span> // Encode hash from previous step into base64 encoding<br>
+          <span>String password = base.substring(17,49);</span> // Take 32 characters from generated base64, starting with 17th character, all the way up to 48th
+        </blockquote>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Close</paper-button>
+      </div>
+    </paper-dialog>
+
+    <!-- Source code dialog -->
+    <paper-dialog id="sourceCodeDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal>
+      <h2>Source Code</h2>
+      <paper-dialog-scrollable>
+        Application is fully open-sourced and source code is available to inspect and download at <a href="https://github.com/michalsukupcak/Password-Generator">Github</a>.
+        <p></p>
+        <hr>
+        <p>
+          Feel free to use, download, explore, modify or share any and all parts of the source code.
+          <ul>
+            <li>Version: <strong>5.0</strong></li>
+            <li>Author: <a href="https://github.com/michalsukupcak">Michal Sukupčák</a></li>
+            <li>License: <a href="http://creativecommons.org/licenses/by/4.0/legalcode">CC Attribution 4.0 International</a></li>
+          </ul>
+        </p>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Close</paper-button>
+      </div>
+    </paper-dialog>
+
+    <!-- Android dialog -->
+    <paper-dialog id="androidDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal>
+      <h2>Android Version</h2>
+      <paper-dialog-scrollable>
+        <div>
+          Yes, there is an Android version of the app, of course completely free to download. And open-source just like
+          the web app. You can find it on Google Play Store:<br>
+          <br>
+          <div class="center">
+            <a href="https://play.google.com/store/apps/details?id=com.sarriel.pass">
+              <img src="/images/play-badge.png">
+            </a>
+          </div>
+        </div>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Close</paper-button>
+      </div>
+    </paper-dialog>
+
+    <!-- Clipboard copy confirmation toast -->
+    <paper-toast id="copyToClipboardToast">Password has been copied to your clipboard!</paper-toast>
+
+    <!-- Mobile breakpoint media query -->
+    <iron-media-query query="(max-width: 420px)" query-matches="{{isMobile}}"></iron-media-query>
+
+    <!-- Localstorage configuration -->
+    <app-localstorage-document key="_psswdgnrtr_secret" data="{{secretStorage}}"></app-localstorage-document>
+    <app-localstorage-document key="_psswdgnrtr_saveSecret" data="{{saveSecret}}"></app-localstorage-document>
+    <app-localstorage-document key="_psswdgnrtr_copyToClipboard" data="{{copyToClipboard}}"></app-localstorage-document>
+    <app-localstorage-document key="_psswdgnrtr_showPassword" data="{{showPassword}}"></app-localstorage-document>
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+
+        /**
+         * Element configuration.
+         */
+        is: 'x-app',
+        properties: {
+
+          /**
+           * User's alias.
+           */
+          alias: {
+            type: String,
+            value: ''
+          },
+
+          /**
+           * Clipboard.js object.
+           */
+          clipboard: {
+            type: Object
+          },
+
+          /**
+           * If true, _generate() copies password to clipboard automatically.
+           */
+          copyToClipboard: {
+            type: Boolean,
+            value: true
+          },
+
+          /**
+           * Set to true if app is in mobile layout mode (breakpoint @ 420px).
+           */
+          isMobile: {
+            type: Boolean
+          },
+
+          /**
+           * Generated password.
+           */
+          password: {
+            type: String,
+            value: ''
+          },
+
+          /**
+           * Currently opened page: 0 = form page, 1 = password box page.
+           */
+          page: {
+            type: Number,
+            value: 0
+          },
+
+          /**
+           * If true, secret is saved into localStorage.
+           */
+          saveSecret: {
+            type: Boolean,
+            value: false
+          },
+
+          /**
+           * User's secret.
+           */
+          secret: {
+            type: String,
+            value: ''
+          },
+
+          /**
+           * User's secret stored in localStorage.
+           */
+          secretStorage: {
+            type: String,
+            value: ''
+          },
+
+          /**
+           * If true, _generate() opens password box page.
+           */
+          showPassword: {
+            type: Boolean,
+            value: true
+          }
+
+        },
+        observers: [
+          '_secretStorageChanged(secretStorage)',
+          '_saveSecretChanged(saveSecret)',
+        ],
+
+        /**
+         * Ready callback. Initializes clipboard.js.
+         */
+        ready: function () {
+          this.set('clipboard', new Clipboard(this.$.copyToClipboardButton));
+          this.clipboard.on('success', function () {
+            this.$.copyToClipboardToast.show();
+          }.bind(this));
+        },
+
+        /**
+         * Attached callback. Sets focus on alias input.
+         */
+        attached: function () {
+          this.async(function () {
+            this.$.aliasInput.$.input.focus();
+          });
+        },
+
+        /**
+         * When secret in localStorage is changed (eg. loaded), set new this.secret value.
+         * @param secretStorage
+         * @private
+         */
+        _secretStorageChanged: function (secretStorage) {
+          if (secretStorage) {
+            this.set('secret', secretStorage);
+          }
+        },
+
+        /**
+         * When saveSecret is unchecked, clear this.secret and this.secretStorage values.
+         *
+         * @param saveSecret
+         * @private
+         */
+        _saveSecretChanged: function (saveSecret) {
+          if (!saveSecret) {
+            this.set('secret', '');
+            this.set('secretStorage', '');
+          }
+        },
+
+        /**
+         * Observer on alias key up event, waits for enter key (keyCode = 13). When enter is pressed and alias is
+         * non-empty string, test secret. If secret is non-empty string, call _generate(), otherwise focus secret.
+         *
+         * @param event
+         * @private
+         */
+        _aliasKeyUp: function (event) {
+          if (event.keyCode === 13) {
+            if (this.alias.length > 0) {
+              if (this.secret.length > 0) {
+                this._generate();
+              } else {
+                this.$.secretInput.$.input.focus();
+              }
+            }
+          }
+        },
+
+        /**
+         * Observer on alias key up event, waits for enter key (keyCode = 13). When enter is pressed and secret is
+         * non-empty string, test alias. If alias is non-empty string, call _generate(), otherwise focus alias.
+         *
+         * @param event
+         * @private
+         */
+        _secretKeyUp: function (event) {
+          this.$.secretInput.validate();
+          if (event.keyCode === 13) {
+            if (this.secret.length > 0) {
+              if (this.alias.length > 0) {
+                this._generate();
+              } else {
+                this.$.aliasInput.$.input.focus();
+              }
+            }
+          }
+        },
+
+        /**
+         * Validate form, if form is valid, blur inputs, generate password and copy password to clipboard (if
+         * copyToClipboard is true) and show password (if showPassword is true).
+         *
+         * If form is invalid, test alias. If alias is empty string, focus alias, otherwise focus secret.
+         *
+         * @private
+         */
+        _generate: function () {
+          if (this.$.form.validate()) {
+            this.$.aliasInput.$.input.blur();
+            this.$.secretInput.$.input.blur();
+            this.password = Base64.encode(Sha256.hash(this.alias + this.secret)).substring(17,49);
+            if (this.copyToClipboard) {
+              this.$.copyToClipboardButton.click();
+            }
+            if (this.showPassword) {
+              this.page = 1;
+            }
+            if (this.saveSecret) {
+              this.set('secretStorage', this.secret);
+            }
+          } else {
+            if (this.alias.length <= 0) {
+              this.$.aliasInput.$.input.focus();
+            } else {
+              this.$.secretInput.$.input.focus();
+            }
+          }
+        },
+
+        /**
+         * Clear all data from app.
+         *
+         * @private
+         */
+        _clear: function () {
+          this.set('alias', '');
+          this.set('secret', '');
+          this.set('secretStorage', '');
+          this.set('saveSecret', false);
+          this.set('copyToClipboard', true);
+          this.set('showPassword', true);
+          this.set('password', '');
+        },
+
+        /**
+         * Copy this.password into clipboard. Only set clipboardText in copyToClipboardButton's dataset, rest is
+         * handled by clipboard.js object registered at ready callback.
+         *
+         * @private
+         */
+        _copyToClipboard: function () {
+          this.$.copyToClipboardButton.dataset.clipboardText = this.password;
+        },
+
+        /**
+         * Go back to form page.
+         *
+         * @private
+         */
+        _back: function () {
+          this.page = 0;
+        },
+
+        /**
+         * Open "Security" dialog.
+         *
+         * @private
+         */
+        _openSecurityDialog: function () {
+          this.$.securityDialog.open();
+          if (this.isMobile) {
+            console.log(this.$.overflowMenu);
+            this.$$('#overflowMenu').close();
+          }
+        },
+
+        /**
+         * Open "Source Code" dialog.
+         *
+         * @private
+         */
+        _openSourceCodeDialog: function () {
+          this.$.sourceCodeDialog.open();
+          if (this.isMobile) {
+            this.$$('#overflowMenu').close();
+          }
+        },
+
+        /**
+         * Open "Android" dialog.
+         *
+         * @private
+         */
+        _openAndroidDialog: function () {
+          this.$.androidDialog.open();
+          if (this.isMobile) {
+            this.$$('#overflowMenu').close();
+          }
+        }
+
+      });
+    })();
+  </script>
+
+</dom-module>

@@ -1,0 +1,86 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+
+<dom-module id="x-checkbox">
+  <template>
+
+    <style>
+
+      :host {
+        display: block;
+      }
+
+      paper-checkbox {}
+
+      div {
+        color: var(--description-color);
+        font-size: .8em;
+        margin: 0 0 0 26px;
+      }
+
+    </style>
+
+    <!-- Checkbox -->
+    <paper-checkbox checked="{{checked}}"><content></content></paper-checkbox>
+
+    <!-- Description -->
+    <div>[[description]]</div>
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+
+        is: 'x-checkbox',
+        properties: {
+
+          title: {
+            type: String,
+            value: ''
+          },
+
+          checked: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+
+          description: {
+            type: String,
+            value: '',
+            readonly: true
+          },
+
+          descriptionChecked: {
+            type: String,
+            value: ''
+          },
+
+          descriptionUnchecked: {
+            type: String,
+            value: ''
+          }
+
+        },
+        observers: [
+          '_checkedChanged(checked)'
+        ],
+
+        _checkedChanged: function (checked) {
+          this.async(function () {
+            this.debounce('_checkedChanged', function () {
+              if (checked) {
+                this.set('description', this.descriptionChecked);
+              } else {
+                this.set('description', this.descriptionUnchecked);
+              }
+            });
+          });
+        }
+
+      });
+    })();
+  </script>
+
+</dom-module>

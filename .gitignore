@@ -1,6 +1,3 @@
-node_modules
-dist
-bower_components
 .idea
-.tmp
-.publish/
+bower_components
+build

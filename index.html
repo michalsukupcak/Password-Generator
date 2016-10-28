@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Password Generator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1E86BD">
+    <link rel="shortcut icon" sizes="32x32" href="/images/app-icon-32.png">
+    <link rel="manifest" href="/manifest.json">
+    <script type="text/javascript">
+
+      // Polymer configuration
+      window.Polymer = { dom: 'shadow' };
+
+      // Load webcomponents polyfills
+      (function() {
+        if ('registerElement' in document
+                && 'import' in document.createElement('link')
+                && 'content' in document.createElement('template')) {
+        } else {
+          var e = document.createElement('script');
+          e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+          window.addEventListener('DOMContentLoaded', function () { // Wait for DOMContentLoaded (required by Firefox)
+            document.body.appendChild(e);
+          });
+        }
+      })();
+
+      // Load pre-caching service worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+            console.log('Service worker installed.');
+          }).catch(function (error) {
+            console.error('Service worker install failed!');
+            console.log(error);
+          });
+        });
+      }
+
+    </script>
+    <link rel="import" href="/src/x-app.html">
+    <style> body { background-color: #EEE; font-family: 'Roboto', 'Noto', sans-serif; line-height: 1.5; margin: 0; } </style>
+  </head>
+  <body>
+    <x-app></x-app>
+  </body>
+</html>
