@@ -33,3 +33,7 @@ You can serve the built versions by giving `polymer serve` a folder to serve fro
 ```
 $ polymer serve build/bundled
 ```
+
+## Live version:
+
+Visit https://password-generator.webapp.sk to see the app in action.
