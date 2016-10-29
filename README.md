@@ -1,5 +1,16 @@
 # Password Generator
 
+Progressive web app for password simple password generation on the fly.
+
+- **Secure** - Everything is done inside your browser, no data leave your device, either to our servers, or anywhere else.
+- **Easy to use** - Well designed and polished UI for both desktops and mobile devices.
+- **Helpful** - No need to remember lots of complicated passwords to be secure.
+- **Fast** - Your password is generated instantly.
+
+![Password Generator - Desktop layout](docs/screenshot.png) 
+
+Visit https://password-generator.webapp.sk to see the app in action.
+
 ## Requirements
 
 - npm
@@ -36,4 +47,4 @@ $ polymer serve build/bundled
 
 ## Live version:
 
-Visit https://password-generator.webapp.sk to see the app in action.
+
