@@ -1,27 +1,26 @@
+<!-- Imports -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 
+<!-- Element -->
 <dom-module id="x-checkbox">
   <template>
 
+    <!-- CSS -->
     <style>
 
-      :host {
-        display: block;
-      }
+      /* Element */
+      :host { display: block; }
 
-      paper-checkbox {}
-
-      div {
-        color: var(--description-color);
-        font-size: .8em;
-        margin: 0 0 0 26px;
-      }
+      /* Description wrapper */
+      div { color: var(--description-color); font-size: .8em; margin: 0 0 0 26px; }
 
     </style>
 
     <!-- Checkbox -->
-    <paper-checkbox checked="{{checked}}"><content></content></paper-checkbox>
+    <paper-checkbox checked="{{checked}}">
+      <slot></slot>
+    </paper-checkbox>
 
     <!-- Description -->
     <div>[[description]]</div>
@@ -32,31 +31,42 @@
       'use strict';
       Polymer({
 
+        /**
+         * Element configuration.
+         */
         is: 'x-checkbox',
         properties: {
 
-          title: {
-            type: String,
-            value: ''
-          },
-
+          /**
+           * Internal checkbox's "checked" value state.
+           */
           checked: {
             type: Boolean,
             value: false,
             notify: true
           },
 
+          /**
+           * Currently visible description (copied from descriptionChecked or descriptionUnchecked depending on
+           * element state).
+           */
           description: {
             type: String,
             value: '',
             readonly: true
           },
 
+          /**
+           * String that should be set as description when checkbox is checked.
+           */
           descriptionChecked: {
             type: String,
             value: ''
           },
 
+          /**
+           * String that should be set as description when checkbox is unchecked.
+           */
           descriptionUnchecked: {
             type: String,
             value: ''
@@ -67,6 +77,13 @@
           '_checkedChanged(checked)'
         ],
 
+        /**
+         * Observer for this.checked attribute, sets this.description to required value (descriptionChecked or
+         * descriptionUnchecked).
+         *
+         * @param checked
+         * @private
+         */
         _checkedChanged: function (checked) {
           this.async(function () {
             this.debounce('_checkedChanged', function () {
