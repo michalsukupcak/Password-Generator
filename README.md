@@ -1,6 +1,6 @@
 # Password Generator
 
-Progressive web app for password simple password generation on the fly.
+Progressive web app for password simple password generation on the fly built using Web Components and the Polymer library.
 
 - **Secure** - Everything is done inside your browser, no data leave your device, either to our servers, or anywhere else.
 - **Easy to use** - Well designed and polished UI for both desktops and mobile devices.
@@ -45,6 +45,5 @@ You can serve the built versions by giving `polymer serve` a folder to serve fro
 $ polymer serve build/bundled
 ```
 
-## Live version:
 
 
